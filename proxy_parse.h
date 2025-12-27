@@ -13,7 +13,8 @@
 #include <errno.h>
 #include <ctype.h>
 
-#ifndef PROXY_PARSE
+// these are header guards, at last you will find a #endif -> end if condition
+#ifndef PROXY_PARSE /* everything below this is included. */
 #define PROXY_PARSE
 
 #define DEBUG 1
@@ -29,16 +30,21 @@
    The buf and buflen fields are used internally to maintain the parsed request
    line.
  */
+
+ /*
+ GET /search HTTP/1.1
+ Host: www.google.com
+ */
 struct ParsedRequest {
-     char *method; 
+     char *method;   //GET 
      char *protocol; 
-     char *host; 
+     char *host;     // www.google.com
      char *port; 
-     char *path;
-     char *version;
+     char *path;     // /search
+     char *version;  // HTTP/1.1
      char *buf;
      size_t buflen;
-     struct ParsedHeader *headers;
+     struct ParsedHeader *headers;// linked-list of header -> one element -> [key:value]
      size_t headersused;
      size_t headerslen;
 };
